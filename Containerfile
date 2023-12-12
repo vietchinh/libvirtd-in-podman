@@ -1,4 +1,4 @@
-FROM registry.fedoraproject.org/fedora:latest
+FROM registry.fedoraproject.org/fedora-minimal:latest
 MAINTAINER vietchinh
 
 COPY ["container_init.sh", "/usr/bin/"]
