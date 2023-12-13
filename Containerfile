@@ -4,7 +4,7 @@ MAINTAINER vietchinh
 COPY ["container_init.sh", "/usr/bin/"]
 COPY ["container_init.service", "/etc/systemd/system/"]
 
-RUN mkdir -p /root/.ssh && dnf install systemd -y && dnf install qemu-kvm libvirt openssh-server -y && dnf clean all ; \
+RUN dnf install systemd -y && dnf install qemu-kvm libvirt openssh-server -y && dnf clean all ; \
     (cd /usr/lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
     rm -f /usr/lib/systemd/system/multi-user.target.wants/*;\
     rm -f /etc/systemd/system/*.wants/*;\
