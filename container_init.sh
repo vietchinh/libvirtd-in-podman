@@ -40,12 +40,14 @@ file_env() {
 file_env ROOT_PASSWORD
 if [ -n "${ROOT_PASSWORD}" ]; then
     echo Setting root password...
-    echo root:${ROOT_PASSWORD}|chpasswd
+    echo "root:${ROOT_PASSWORD}" | chpasswd
     unset -v ROOT_PASSWORD
 fi
 
 # Set SSHD Listen port
 if [ -n "${SSHD_PORT}" ]; then
-    echo Setting SSHD Listen port to ${SSHD_PORT}
+    echo "Setting SSHD Listen port to ${SSHD_PORT}"
     sed -i "s/^#\?Port [1-9]\+$/Port ${SSHD_PORT}/" /etc/ssh/sshd_config
+    sed -i "s/^#\?#ListenAddress 0.0.0.0$/ListenAddress 127.0.0.1/" /etc/ssh/sshd_config
+    sed -i "s/^#\?#ListenAddress ::$/ListenAddress ::/" /etc/ssh/sshd_config
 fi
