@@ -40,7 +40,7 @@ file_env() {
 file_env ROOT_PASSWORD
 if [ -n "${ROOT_PASSWORD}" ]; then
     echo Setting root password...
-    echo "root:${ROOT_PASSWORD}" | chpasswd
+    echo "root:${ROOT_PASSWORD}"|chpasswd
     unset -v ROOT_PASSWORD
 fi
 
