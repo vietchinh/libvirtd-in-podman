@@ -13,6 +13,7 @@ RUN sed -i "s/^#\?listen_tls = 0\+$/listen_tls = 0/" /etc/libvirt/libvirtd.conf;
     sed -i "s/^#\?#tcp_port = \"16509\"$/tcp_port = \"16509\"/" /etc/libvirt/libvirtd.conf; \
     sed -i "s/^#\?#listen_addr = \"127.0.0.1\"$/tls_port = \"127.0.0.1\"/" /etc/libvirt/libvirtd.conf; \
 
-VOLUME [ "/etc/libvirt", "/var/lib/libvirt/"]
+VOLUME [ "/etc/libvirt"]
+VOLUME [ "/var/lib/libvirt/"]
 
 CMD ["/sbin/init"]
