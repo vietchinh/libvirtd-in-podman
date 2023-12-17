@@ -1,7 +1,7 @@
-FROM docker.io/almalinux/9-init:latest
+FROM registry.fedoraproject.org/fedora-minimal:latest
 MAINTAINER vietchinh
 
-RUN dnf install qemu-kvm libvirt -y && dnf clean all ; \
+RUN microdnf install qemu-kvm libvirt -y && microdnf clean all; \
     systemctl enable virtlockd; systemctl enable libvirt-guests; systemctl enable libvirtd-tcp.socket
 
 VOLUME [ "/etc/libvirt"]
