@@ -4,7 +4,7 @@ MAINTAINER vietchinh
 COPY ["container_init.sh", "/usr/bin/"]
 COPY ["container_init.service", "/etc/systemd/system/"]
 
-RUN microdnf install qemu-kvm libvirt -y && microdnf clean all; \
+RUN microdnf install systemd qemu-kvm libvirt -y && microdnf clean all; \
     systemctl enable virtlockd; systemctl enable libvirt-guests; systemctl enable libvirtd-tcp.socket
 
 RUN echo "listen_tls = 0" >> /etc/libvirt/libvirtd.conf; \
