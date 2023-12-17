@@ -4,7 +4,7 @@ MAINTAINER vietchinh
 COPY ["container_init.sh", "/usr/bin/"]
 COPY ["container_init.service", "/etc/systemd/system/"]
 
-RUN microdnf install systemd qemu-kvm libvirt -y && microdnf clean all
+RUN microdnf install systemd qemu-kvm libvirt dnf-automatic -y && microdnf clean all
 
 RUN (cd /usr/lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
     rm -f /usr/lib/systemd/system/multi-user.target.wants/*;\
@@ -14,7 +14,7 @@ RUN (cd /usr/lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == sy
     rm -f /usr/lib/systemd/system/sockets.target.wants/*initctl*; \
     rm -f /usr/lib/systemd/system/basic.target.wants/*; \
     rm -f /usr/lib/systemd/system/anaconda.target.wants/*; \
-    systemctl enable virtlockd; systemctl enable libvirt-guests; systemctl enable libvirtd-tcp.socket; systemctl enable container_init
+    systemctl enable virtlockd; systemctl enable libvirt-guests; systemctl enable libvirtd-tcp.socket; systemctl enable container_init; systemctl enable dnf-automatic-install.timer
 
 
 RUN echo "listen_tls = 0" >> /etc/libvirt/libvirtd.conf; \
