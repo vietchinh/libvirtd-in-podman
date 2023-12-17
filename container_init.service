@@ -1,6 +1,5 @@
 [Unit]
 Description=Initialize container
-Before=libvirtd.service sshd.service
 
 [Service]
 Type=oneshot

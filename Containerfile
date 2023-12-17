@@ -12,8 +12,7 @@ RUN echo "listen_tls = 0" >> /etc/libvirt/libvirtd.conf; \
     echo 'tls_port = "16514"' >> /etc/libvirt/libvirtd.conf; \
     echo 'tcp_port = "16509"' >> /etc/libvirt/libvirtd.conf; \
     echo 'auth_tcp = "none"' >> /etc/libvirt/libvirtd.conf; \
-    echo 'listen_addr = "127.0.0.1"' >> /etc/libvirt/libvirtd.conf; \
-    echo 'LIBVIRTD_ARGS="--listen"' >> /etc/sysconfig/libvirtd
+    echo 'listen_addr = "127.0.0.1"' >> /etc/libvirt/libvirtd.conf
 
 VOLUME [ "/etc/libvirt"]
 VOLUME [ "/var/lib/libvirt/"]
