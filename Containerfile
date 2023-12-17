@@ -4,7 +4,7 @@ MAINTAINER vietchinh
 COPY ["container_init.sh", "/usr/bin/"]
 COPY ["container_init.service", "/etc/systemd/system/"]
 
-RUN microdnf install systemd qemu-kvm libvirt dnf-automatic -y && microdnf clean all
+RUN microdnf install systemd qemu-kvm libvirt dnf-automatic --setopt=install_weak_deps=False --nodocs -y && microdnf clean all
 
 RUN (cd /usr/lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
     rm -f /usr/lib/systemd/system/multi-user.target.wants/*;\
