@@ -4,7 +4,7 @@ MAINTAINER vietchinh
 COPY ["container_init.sh", "/usr/bin/"]
 COPY ["container_init.service", "/etc/systemd/system/"]
 
-RUN microdnf install systemd qemu-kvm libvirt dnf-automatic --setopt=install_weak_deps=False --nodocs -y && microdnf clean all
+RUN microdnf install systemd qemu-kvm libvirt dnf-automatic passt nano --setopt=install_weak_deps=False --nodocs -y && microdnf clean all
 
 RUN (cd /usr/lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
     rm -f /usr/lib/systemd/system/multi-user.target.wants/*;\
@@ -16,15 +16,8 @@ RUN (cd /usr/lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == sy
     rm -f /usr/lib/systemd/system/anaconda.target.wants/*; \
     systemctl enable virtlockd; systemctl enable libvirt-guests; systemctl enable libvirtd-tcp.socket; systemctl enable container_init; systemctl enable dnf-automatic-install.timer
 
-
-RUN echo "listen_tls = 0" >> /etc/libvirt/libvirtd.conf; \
-    echo 'listen_tcp = 1' >> /etc/libvirt/libvirtd.conf; \
-    echo 'tls_port = "16514"' >> /etc/libvirt/libvirtd.conf; \
-    echo 'tcp_port = "16509"' >> /etc/libvirt/libvirtd.conf; \
-    echo 'auth_tcp = "none"' >> /etc/libvirt/libvirtd.conf; \
-    echo 'listen_addr = "127.0.0.1"' >> /etc/libvirt/libvirtd.conf
-
 VOLUME [ "/etc/libvirt"]
 VOLUME [ "/var/lib/libvirt/"]
+VOLUME [ "/var/run/libvirt/"]
 
 CMD ["/sbin/init"]
