@@ -39,6 +39,11 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository }}
           flavor: latest=true
+      - name: Install latest podman + buildah
+        run: |
+          sudo apt-get update
+          sudo apt-get -y upgrade
+          sudo apt-get -y install podman buildah
       - name: Build Image
         id: build_image
         uses: redhat-actions/buildah-build@v2
