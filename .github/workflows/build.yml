@@ -10,23 +10,32 @@ on:
   workflow_dispatch:
 
 jobs:
-#  check:
-#    runs-on: ubuntu-latest
-#    outputs:
-#      needs-update: ${{ steps.check.outputs.needs-updating }}
-#    steps:
-#      - name: Check if update available
-#        id: check
-#        uses: lucacome/docker-image-update-checker@v1
-#        with:
-#          base-image: nginx:1.21.0
-#          image: user/app:latest
-#          platforms: linux/amd64,linux/arm64
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      update: ${{ steps.check.outputs.update }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Check if there is an update available
+        id: check
+        run: |
+          grep=$(grep FROM ./Containerfile)
+          url=${grep:4}
+          podman pull $url
+          yesterday=$(date -d "yesterday" +"%s")
+          image_creation_date=$(date -d $(podman image inspect $url | jq --raw-output .[].Created) +"%s")
+          
+          if (( image_creation_date > yesterday )); then
+              echo "update=true" >> $GITHUB_OUTPUT
+          else
+              echo "update=false" >> $GITHUB_OUTPUT
+          fi
 
   build-and-push-image:
-    #needs: check
+    needs: check
     runs-on: ubuntu-latest
-    #if: needs.check.outputs.update == 'true'
+    if: needs.check.outputs.update == 'true' || github.event_name == 'workflow_dispatch'
     permissions:
       contents: read
       packages: write
