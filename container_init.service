@@ -3,7 +3,7 @@ Description=Initialize container
 
 [Service]
 Type=oneshot
-PassEnvironment=ROOT_PASSWORD ROOT_PASSWORD_FILE SSHD_PORT DEBUG_MODE
+PassEnvironment=DEBUG_MODE
 ExecStart=/bin/sh /usr/bin/container_init.sh
 
 [Install]
