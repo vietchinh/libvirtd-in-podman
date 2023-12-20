@@ -4,6 +4,10 @@ MAINTAINER vietchinh
 COPY ["container_init.sh", "/usr/bin/"]
 COPY ["container_init.service", "/etc/systemd/system/"]
 
+VOLUME [ "/etc/libvirt"]
+VOLUME [ "/var/lib/libvirt/"]
+VOLUME [ "/var/run/libvirt/"]
+
 RUN microdnf install systemd qemu-kvm libvirt dnf-automatic passt nano --setopt=install_weak_deps=False --nodocs -y && microdnf clean all
 
 RUN (cd /usr/lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
@@ -15,9 +19,5 @@ RUN (cd /usr/lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == sy
     rm -f /usr/lib/systemd/system/basic.target.wants/*; \
     rm -f /usr/lib/systemd/system/anaconda.target.wants/*; \
     systemctl enable virtlockd; systemctl enable libvirt-guests; systemctl enable libvirtd-tcp.socket; systemctl enable container_init; systemctl enable dnf-automatic-install.timer
-
-VOLUME [ "/etc/libvirt"]
-VOLUME [ "/var/lib/libvirt/"]
-VOLUME [ "/var/run/libvirt/"]
 
 CMD ["/sbin/init"]
