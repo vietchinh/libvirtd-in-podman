@@ -8,7 +8,9 @@ VOLUME [ "/etc/libvirt"]
 VOLUME [ "/var/lib/libvirt/"]
 VOLUME [ "/var/run/libvirt/"]
 
-RUN microdnf install systemd qemu-kvm libvirt dnf-automatic passt nano --setopt=install_weak_deps=False --nodocs -y && microdnf clean all
+RUN useradd -U -s /sbin/nologin -c "Iwa Uzuka is a stand in user for polkit, connecting with outside user" iwauzuka
+
+RUN microdnf install systemd qemu-kvm libvirt passt nano --setopt=install_weak_deps=False --nodocs -y && microdnf clean all
 
 RUN (cd /usr/lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
     rm -f /usr/lib/systemd/system/multi-user.target.wants/*;\
@@ -18,6 +20,6 @@ RUN (cd /usr/lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == sy
     rm -f /usr/lib/systemd/system/sockets.target.wants/*initctl*; \
     rm -f /usr/lib/systemd/system/basic.target.wants/*; \
     rm -f /usr/lib/systemd/system/anaconda.target.wants/*; \
-    systemctl enable virtlockd; systemctl enable libvirt-guests; systemctl enable libvirtd-tcp.socket; systemctl enable container_init; systemctl enable dnf-automatic-install.timer
+    systemctl enable libvirt-guests; systemctl enable libvirtd; systemctl enable container_init
 
 CMD ["/sbin/init"]
