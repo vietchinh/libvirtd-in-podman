@@ -21,6 +21,13 @@ RUN (cd /usr/lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == sy
     rm -f /usr/lib/systemd/system/sockets.target.wants/*initctl*; \
     rm -f /usr/lib/systemd/system/basic.target.wants/*; \
     rm -f /usr/lib/systemd/system/anaconda.target.wants/*; \
-    systemctl enable libvirt-guests; systemctl mask libvirtd; systemctl enable container_init
+    systemctl enable libvirt-guests; systemctl mask libvirtd; systemctl enable container_init;
+    systemctl enable virtqemud.service;
+    systemctl enable virtinterfaced.service;
+    systemctl enable virtnetworkd.service;
+    systemctl enable virtnodedevd.service;
+    systemctl enable virtnwfilterd.service;
+    systemctl enable virtsecretd.service;
+    systemctl enable virtstoraged.service;
 
 CMD ["/sbin/init"]
