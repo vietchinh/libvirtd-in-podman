@@ -8,7 +8,7 @@ VOLUME [ "/etc/libvirt"]
 VOLUME [ "/var/lib/libvirt/"]
 VOLUME [ "/var/run/libvirt/"]
 
-RUN useradd --user-group --groups sudo --create-home --shell /bin/bash --comment "Iwa Uzuka is a stand in user for polkit, connecting with outside user" iwauzuka
+RUN useradd --user-group --create-home --shell /bin/bash --comment "Iwa Uzuka is a stand in user for polkit, connecting with outside user" iwauzuka
 
 RUN dnf install systemd qemu-kvm libvirt passt nano --setopt=install_weak_deps=False --nodocs -y && dnf clean all
 
