@@ -8,6 +8,13 @@ VOLUME [ "/var/lib/libvirt/"]
 VOLUME [ "/var/run/libvirt/"]
 
 RUN microdnf install qemu-kvm libvirt passt nano --setopt=install_weak_deps=False --nodocs -y && microdnf clean all && \
-    systemctl enable virtlockd; systemctl enable libvirt-guests; systemctl enable libvirtd-tcp.socket; systemctl enable container_init
+    systemctl enable libvirt-guests; systemctl mask libvirtd; systemctl enable container_init; \
+    systemctl enable virtqemud.service; \
+    systemctl enable virtinterfaced.service; \
+    systemctl enable virtnetworkd.service; \
+    systemctl enable virtnodedevd.service; \
+    systemctl enable virtnwfilterd.service; \
+    systemctl enable virtsecretd.service; \
+    systemctl enable virtstoraged.service;
 
 CMD ["/sbin/init"]
