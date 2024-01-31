@@ -28,6 +28,6 @@ RUN (cd /usr/lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == sy
     systemctl enable virtnodedevd.service;
     systemctl enable virtnwfilterd.service;
     systemctl enable virtsecretd.service;
-    systemctl enable virtstoraged.service;
+    systemctl enable virtstoraged.service
 
 CMD ["/sbin/init"]
