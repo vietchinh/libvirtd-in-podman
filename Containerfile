@@ -22,6 +22,33 @@ RUN (cd /usr/lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == sy
     rm -f /usr/lib/systemd/system/basic.target.wants/*; \
     rm -f /usr/lib/systemd/system/anaconda.target.wants/*; \
     systemctl enable libvirt-guests; systemctl mask libvirtd; systemctl enable container_init;
-    for drv in qemu interface network nodedev nwfilter secret storage; do systemctl unmask virt${drv}d.service systemctl unmask virt${drv}d{,-ro,-admin}.socket systemctl enable virt${drv}d.service systemctl enable virt${drv}d{,-ro,-admin}.socket; done
+    systemctl unmask virtqemud.service;
+    systemctl unmask virtinterfaced.service;
+    systemctl unmask virtnetworkd.service;
+    systemctl unmask virtnodedevd.service;
+    systemctl unmask virtnwfilterd.service;
+    systemctl unmask virtsecretd.service;
+    systemctl unmask virtstoraged.service;
+    systemctl unmask virtqemud{,-ro,-admin}.socket;
+    systemctl unmask virtinterfaced{,-ro,-admin}.socket;
+    systemctl unmask virtnetworkd{,-ro,-admin}.socket;
+    systemctl unmask virtnodedevd{,-ro,-admin}.socket;
+    systemctl unmask virtnwfilterd{,-ro,-admin}.socket;
+    systemctl unmask virtsecretd{,-ro,-admin}.socket;
+    systemctl unmask virtstoraged{,-ro,-admin}.socket;
+    systemctl enable virtqemud.service;
+    systemctl enable virtinterfaced.service;
+    systemctl enable virtnetworkd.service;
+    systemctl enable virtnodedevd.service;
+    systemctl enable virtnwfilterd.service;
+    systemctl enable virtsecretd.service;
+    systemctl enable virtstoraged.service;
+    systemctl enable virtqemud{,-ro,-admin}.socket;
+    systemctl enable virtinterfaced{,-ro,-admin}.socket;
+    systemctl enable virtnetworkd{,-ro,-admin}.socket;
+    systemctl enable virtnodedevd{,-ro,-admin}.socket;
+    systemctl enable virtnwfilterd{,-ro,-admin}.socket;
+    systemctl enable virtsecretd{,-ro,-admin}.socket;
+    systemctl enable virtstoraged{,-ro,-admin}.socket
 
 CMD ["/sbin/init"]
