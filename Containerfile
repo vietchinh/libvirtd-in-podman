@@ -22,6 +22,7 @@ RUN systemctl mask libvirtd; \
     systemctl enable virtnodedevd.service; \
     systemctl enable virtnwfilterd.service; \
     systemctl enable virtsecretd.service; \
-    systemctl enable virtstoraged.service
+    systemctl enable virtstoraged.service; \
+    systemctl enable virtproxyd.service
 
 CMD ["/sbin/init"]
