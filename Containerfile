@@ -22,12 +22,12 @@ RUN (cd /usr/lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == sy
     rm -f /usr/lib/systemd/system/basic.target.wants/*; \
     rm -f /usr/lib/systemd/system/anaconda.target.wants/*; \
     systemctl enable libvirt-guests; systemctl mask libvirtd; systemctl enable container_init;
-    for drv in qemu interface network nodedev nwfilter secret storage
-      do
-        systemctl unmask virt${drv}d.service
-        systemctl unmask virt${drv}d{,-ro,-admin}.socket
-        systemctl enable virt${drv}d.service
-        systemctl enable virt${drv}d{,-ro,-admin}.socket
+    for drv in qemu interface network nodedev nwfilter secret storage \
+      do \
+        systemctl unmask virt${drv}d.service \
+        systemctl unmask virt${drv}d{,-ro,-admin}.socket \
+        systemctl enable virt${drv}d.service \
+        systemctl enable virt${drv}d{,-ro,-admin}.socket \
       done
 
 CMD ["/sbin/init"]
