@@ -33,4 +33,6 @@ RUN (cd /usr/lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == sy
     systemctl enable virtstoraged.service; \
     systemctl enable virtproxyd.service
 
+COPY 50-libvirt-passwordless.rules /etc/polkit-1/rules.d/
+
 CMD ["/sbin/init"]
